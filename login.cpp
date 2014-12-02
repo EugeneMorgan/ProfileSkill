@@ -55,16 +55,13 @@ void Login::on_submit_clicked()
         out << "password:" << ui->linePassword->text();
         file.close();
     }
-    //this->close();
     MainWindow *mw = new MainWindow;
     QNetworkAccessManager *manager = new QNetworkAccessManager;
     QNetworkRequest *request = new QNetworkRequest;
     QObject::connect(manager, SIGNAL(finished(QNetworkReply*)), mw, SLOT(replyFinished(QNetworkReply*)));
     QString pass = QString(QCryptographicHash::hash((ui->linePassword->text().toLocal8Bit()),QCryptographicHash::Md5).toHex());
-   // QString pass = QString(QCryptographicHash::hash(("metallist1925"),QCryptographicHash::Md5).toHex());
     QList<QNetworkCookie> cookie_list;
     cookie_list.append(QNetworkCookie("login", ui->lineLogin->text().toLocal8Bit()));
-  //  cookie_list.append(QNetworkCookie("login", "Fanboy"));
     cookie_list.append(QNetworkCookie("password", pass.toLocal8Bit()));
     request->setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     request->setUrl(QUrl("http://www.soccerlife.ru/team4.php"));
